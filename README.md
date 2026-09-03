@@ -56,12 +56,12 @@ On Android, the upstream library contributes biometric permissions, `READ_GSERVI
 Releases are published by GitHub Actions, not from a developer workstation. Before the first release:
 
 1. Complete the required organizational, security, privacy, and legal approvals.
-2. Configure npm trusted publishing for `wix-incubator/fingerprintjs-react-native` and its `npm` GitHub environment.
-3. Create a GitHub release whose tag matches the package version, for example `v0.1.0`.
+2. Ask Wix Security to approve the workflows and enable GitHub Actions for the repository.
+3. Have an authorized npm maintainer bootstrap the package on npm with an interactive, two-factor-authenticated publish. npm trusted publishing cannot be configured until the package exists.
+4. Configure npm trusted publishing for `wix-incubator/fingerprintjs-react-native`, the `publish.yml` workflow, and its `npm` GitHub environment for subsequent releases.
+5. Create a GitHub release whose tag matches the package version.
 
-The release workflow verifies the package before publishing it publicly to npm. CI and release dependency installation use Wix's required `npq` package-firewall flow, Yarn 4.10.3, a committed lockfile, and commit-pinned GitHub Actions.
-
-Repository ownership is assigned to `@wix-private/ot-identity-authentication-fed` through `CODEOWNERS`, which also allows eligible team members to use Wix's `#skipreview` pull-request flow. Auto-approval is intentionally not configured because it is currently supported only in `wix-private` repositories.
+The release workflow verifies the package before publishing it publicly to npm. CI and release dependency installation use Wix's registry firewall and `npq` checks, Yarn 4.10.3, a committed lockfile, and commit-pinned GitHub Actions.
 
 ## License
 
