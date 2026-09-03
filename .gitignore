@@ -1,7 +1,7 @@
 node_modules/
 lib/
+.yarn/install-state.gz
 android/.gradle/
 android/build/
 *.log
 .DS_Store
-
