@@ -18,6 +18,9 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
+      - name: Route npm registry through Wix embargo proxy
+        uses: wix-actions/packages-firewall@b764ce3431d7830e3c5d5df3470a4cc14f03bca3 # master @ 2026-09-01
+
       - name: Set up Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
@@ -37,6 +40,9 @@ jobs:
 
       - name: Verify package
         run: yarn prepack
+
+      - name: Ensure npm supports OIDC trusted publishing
+        run: npm install --global npm@^11.5.1
 
       - name: Publish package
         run: npm publish --access public --provenance
