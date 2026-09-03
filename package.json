@@ -1,0 +1,68 @@
+{
+  "name": "fingerprintjs-react-native",
+  "version": "0.1.0",
+  "description": "A small React Native bridge for the open-source FingerprintJS Android and iOS libraries",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "!android/.gradle",
+    "!android/build",
+    "ios",
+    "RNDeviceFingerprint.podspec",
+    "LICENSE",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "scripts": {
+    "build": "yarn clean && yarn build:commonjs && yarn build:module && yarn build:types",
+    "build:commonjs": "tsc -p tsconfig.commonjs.json",
+    "build:module": "tsc -p tsconfig.module.json",
+    "build:types": "tsc -p tsconfig.types.json",
+    "clean": "node -e \"require('fs').rmSync('lib', { recursive: true, force: true })\"",
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
+    "test": "yarn build && node --test __tests__/index.test.cjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "prepack": "yarn lint && yarn typecheck && yarn test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wix-incubator/fingerprintjs-react-native.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wix-incubator/fingerprintjs-react-native/issues"
+  },
+  "homepage": "https://github.com/wix-incubator/fingerprintjs-react-native#readme",
+  "keywords": [
+    "react-native",
+    "fingerprintjs",
+    "device-fingerprint",
+    "device-identification",
+    "ios",
+    "android"
+  ],
+  "author": "Emanuel Deckel",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": ">=0.70"
+  },
+  "devDependencies": {
+    "prettier": "3.5.3",
+    "typescript": "5.8.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "yarn@4.10.3"
+}
