@@ -34,7 +34,7 @@ jobs:
         run: test "v$(node -p \"require('./package.json').version\")" = "${{ github.event.release.tag_name }}"
 
       - name: Install dependencies
-        run: NPQ_PKG_MGR=yarn npx npq install
+        run: NPQ_PKG_MGR=yarn npx npq@3.27.0 install
         env:
           GITHUB_TOKEN: ${{ github.token }}
 

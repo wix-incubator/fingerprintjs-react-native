@@ -31,7 +31,7 @@ jobs:
         run: corepack enable
 
       - name: Install dependencies
-        run: NPQ_PKG_MGR=yarn npx npq install
+        run: NPQ_PKG_MGR=yarn npx npq@3.27.0 install
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
