@@ -32,11 +32,21 @@ const deviceFingerprintVisitorId = await getFingerprint();
 
 `getFingerprint()` rejects if the native module is not linked or if the native library cannot produce a non-empty fingerprint.
 
+## Stability semantics
+
+The bridge returns the native SDK value unchanged. It does not cache or persist a previous value. Both platforms explicitly use FingerprintJS version 6 with the `optimal` stability level.
+
+An ordinary JavaScript reload or app process restart should return the same value when the device signals used by the SDK are unchanged. The test suite reloads the JavaScript package and recreates the mocked native module to guard against the wrapper introducing per-load state or transforming the native value.
+
+`optimal` is not an immutable device identifier. It intentionally includes mutable signals to improve distinctiveness. For example, Android includes settings such as whether accessibility is enabled, while iOS includes device boot time. Settings changes, device reboots, OS updates, and SDK algorithm changes can therefore produce a different fingerprint. The same SDK call made directly in a host application has the same behavior.
+
+Do not use exact equality as a sole authentication factor or assume that every session from one device will have the same value. A consumer that needs a durable installation identifier should use a separately designed identifier rather than persisting this fingerprint implicitly.
+
 ## Native dependencies
 
-The wrapper deliberately pins the fingerprint algorithm versions so dependency upgrades do not silently change identifiers:
+The wrapper deliberately pins the fingerprint algorithm versions and stability level so dependency upgrades do not silently change identifier semantics:
 
-- Android: `com.github.fingerprintjs:fingerprint-android:2.2.0`, fingerprint version `V_6`
+- Android: `com.github.fingerprintjs:fingerprint-android:2.2.0`, fingerprint version `V_6`, optimal stability, MurmurHash3 x64 128-bit
 - iOS: `FingerprintJS` `1.7.0`, fingerprint version `v6`, optimal stability, SHA-256
 
 The Android dependency is downloaded from JitPack. A host whose dependency resolution ignores package-level repositories must also allow `https://jitpack.io` for the `com.github.fingerprintjs` group.
