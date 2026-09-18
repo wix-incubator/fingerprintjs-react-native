@@ -1,0 +1,51 @@
+name: Firewall resolution probe
+
+on:
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  plain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Route npm registry through Wix embargo proxy
+        uses: wix-actions/packages-firewall@b764ce3431d7830e3c5d5df3470a4cc14f03bca3 # master @ 2026-09-01
+
+  environment-only:
+    runs-on: ubuntu-latest
+    environment: npm
+    steps:
+      - name: Route npm registry through Wix embargo proxy
+        uses: wix-actions/packages-firewall@b764ce3431d7830e3c5d5df3470a4cc14f03bca3 # master @ 2026-09-01
+
+  id-token-only:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Route npm registry through Wix embargo proxy
+        uses: wix-actions/packages-firewall@b764ce3431d7830e3c5d5df3470a4cc14f03bca3 # master @ 2026-09-01
+
+  contents-write:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Route npm registry through Wix embargo proxy
+        uses: wix-actions/packages-firewall@b764ce3431d7830e3c5d5df3470a4cc14f03bca3 # master @ 2026-09-01
+
+  publish-mirror:
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Route npm registry through Wix embargo proxy
+        uses: wix-actions/packages-firewall@b764ce3431d7830e3c5d5df3470a4cc14f03bca3 # master @ 2026-09-01
