@@ -28,7 +28,9 @@ jobs:
         run: corepack enable
 
       - name: Verify release tag
-        run: test "v$(node -p \"require('./package.json').version\")" = "${{ github.event.release.tag_name }}"
+        run: |
+          package_version="$(node -p "require('./package.json').version")"
+          test "v${package_version}" = "${{ github.event.release.tag_name }}"
 
       - name: Install dependencies
         run: npx npq@3.27.0 install
