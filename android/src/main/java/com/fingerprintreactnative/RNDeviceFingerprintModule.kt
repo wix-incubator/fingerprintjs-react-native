@@ -6,6 +6,8 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.fingerprintjs.android.fingerprint.Fingerprinter
 import com.fingerprintjs.android.fingerprint.FingerprinterFactory
+import com.fingerprintjs.android.fingerprint.signal_providers.StabilityLevel
+import com.fingerprintjs.android.fingerprint.tools.hashers.MurMur3x64x128Hasher
 
 private const val MODULE_NAME = "RNDeviceFingerprint"
 private const val ERROR_CODE = "DEVICE_FINGERPRINT_UNAVAILABLE"
@@ -19,7 +21,11 @@ class RNDeviceFingerprintModule(reactContext: ReactApplicationContext) :
     fun getFingerprint(promise: Promise) {
         try {
             val fingerprinter = FingerprinterFactory.create(reactApplicationContext)
-            fingerprinter.getFingerprint(Fingerprinter.Version.V_6) { fingerprint ->
+            fingerprinter.getFingerprint(
+                Fingerprinter.Version.V_6,
+                StabilityLevel.OPTIMAL,
+                MurMur3x64x128Hasher(),
+            ) { fingerprint ->
                 if (fingerprint.isNotEmpty()) {
                     promise.resolve(fingerprint)
                 } else {
